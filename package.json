@@ -1,9 +1,9 @@
 {
-  "name": "hardware-monitoring-api",
+  "name": "price-monitoring",
   "version": "1.0.0",
   "main": "index.ts",
   "keywords": [],
-  "author": "",
+  "author": "Fred Recco",
   "description": "A simple web scraping API.",
   "scripts": {
     "dev": "nodemon"

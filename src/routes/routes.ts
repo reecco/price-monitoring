@@ -1,19 +1,24 @@
 import { Router, Request, Response } from "express";
-import { SaleCard } from "../@types";
 
 import monitoring from "../scrape/monitor";
 import { filterCards } from "../utils";
+import { SaleCard } from "../@types";
 import { authorization as auth } from "../middlewares";
 
 const router = Router();
 
-router.get('/:hardware?/:name', auth, async (req: Request, res: Response) => {
-  let { name, hardware } = req.params;
+router.post("/", auth, async (req: Request, res: Response) => {
+  const name: string = req.body.name;
 
-  name = name.replace(/[ -]|%20/g, '+');
-  hardware = hardware.replace(/[ -]|%20/g, '+');
+  if (!name)
+    return res.status(400).json({ 
+      message: "Invalid request.", 
+      code: 400 
+    });
 
-  const results = await monitoring(name);
+  const nameReplaced = name.replace(/[ _-]/g, '+');
+
+  const results: SaleCard[] = await monitoring(nameReplaced);
 
   const filteredCards: SaleCard[] = filterCards(results);
 
@@ -27,7 +32,7 @@ router.get('/:hardware?/:name', auth, async (req: Request, res: Response) => {
 
   return res.status(200).json({
     timestamp: Date.now(),
-    params: { hardware, name },
+    prompt: nameReplaced,
     results: filteredCards,
     code: 200
   });

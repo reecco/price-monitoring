@@ -16,12 +16,12 @@ export function access(app: Express): void {
 
 export function authorization(req: Request, res: Response, next: NextFunction): void {
   const sys = process.env.TOKEN;
-  const auth = req.headers['authorization'];
-  const token = auth && auth.split(' ')[1];
+  const auth = req.headers["authorization"];
+  const token = auth && auth.split(" ")[1];
 
   if (!sys) {
     res.status(500).json({
-      message: 'Server authentication error.',
+      message: "Server authentication error.",
       code: 500
     });
     return;
@@ -29,7 +29,7 @@ export function authorization(req: Request, res: Response, next: NextFunction): 
 
   if (token !== sys) {
     res.status(401).json({
-      message: 'Invalid token.',
+      message: "Invalid token.",
       code: 401
     });
     return;

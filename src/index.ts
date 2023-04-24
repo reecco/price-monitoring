@@ -1,8 +1,8 @@
 import express, { Express } from "express";
 import { config } from "dotenv";
 
-import routes from "./src/routes";
-import { access } from "./src/middlewares";
+import routes from "./routes";
+import { access } from "./middlewares";
 
 config();
 
